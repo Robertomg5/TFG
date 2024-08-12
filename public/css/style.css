@@ -1,0 +1,863 @@
+body {
+    background-color: #A8D8E8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container {
+    margin-top: 50px; /* Ajusta el margen superior según sea necesario */
+    flex: 1; /* Hace que el contenedor principal ocupe el espacio disponible */
+}
+.logo {
+    max-width: 100%;
+    height: auto;
+    max-width: 150px;
+    height: auto;
+}
+.description {
+    font-size: 24px;
+    font-weight: 600; /* Semi-bold */
+    text-align: center;
+    margin-top: 20px; /* Añade un margen superior para separar el texto del logo */
+}
+.img-inferior {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-top: 30px;
+    width: 100%;
+    height: 60%;
+    margin: 0; /* Elimina cualquier margen de la imagen */
+    padding: 0; /* Elimina cualquier padding de la imagen */
+}
+.custom-btn {
+    background-color: #164773;
+    color: white;
+    width: 100%; /* Ocupa todo el ancho disponible */
+    height: 60px; /* Ajusta la altura según tus necesidades */
+    margin-bottom: 15px; /* Añade separación entre los botones */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    text-decoration: none; /* Elimina el subrayado del texto */
+    display: flex; /* Hace que los botones se comporten como bloques */
+    align-items: center; /* Centra el texto verticalmente */
+    justify-content: center; /* Centra el texto horizontalmente */
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 15px; /* Añade bordes redondeados */
+}
+@media (min-width: 768px) { /* Cambiar el ancho máximo en pantallas más grandes */
+    .custom-btn {
+        max-width: 400px;
+    }
+}
+.custom-btn:hover {
+    background-color: #1b5a91;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos específicos para la página de registro (registro.html) */
+.registro-body {
+    background-color: #b3e5fc;
+}
+
+.registro-header {
+    position: relative;
+    text-align: center;
+}
+
+.registro-img {
+    width: 400px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto;
+}
+
+.registro-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem; /* Tamaño de texto más pequeño */
+    font-weight: bold;
+}
+
+.registro-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.registro-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.registro-form input[type="text"],
+.registro-form input[type="password"],
+.registro-form select {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%; /* Asegura que el campo ocupe todo el ancho disponible */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+.registro-form label {
+    margin-bottom: .5rem; /* Añade un pequeño margen debajo de los labels */
+    display: block;
+}
+
+.avatar-option {
+    background-size: cover;
+    color: #000;
+    height: 40px;
+    padding-left: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.registro-form select {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-overflow: ellipsis; /* Asegura que el texto largo se recorte con puntos suspensivos */
+    white-space: nowrap; /* Evita que el texto se envuelva */
+    overflow: hidden; /* Oculta el texto que no cabe en el contenedor */
+    direction: ltr; /* Asegura que el texto se muestre de izquierda a derecha */
+}
+
+.registro-link {
+    color: #01579b;
+}
+
+.registro-link:hover {
+    text-decoration: underline;
+}
+
+.registro-btn {
+    width: 120px;
+    margin: 0 10px; /* Añade margen a los lados */
+}
+
+.custom-select {
+    width: 100px;
+    margin-right: 20px; /* Añade margen derecho */
+}
+
+.avatar-preview {
+    width: 60px; /* Ajusta el tamaño del recuadro de vista previa */
+    height: 60px;
+    border: 1px solid #ccc; /* Añade borde */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-left: 10px; /* Espacio entre el select y la imagen */
+}
+
+/* Asegurar que las opciones del menú desplegable de avatares muestren las imágenes */
+#avatar {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+#avatar option[data-img] {
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    padding-left: 30px; /* Espacio para la imagen */
+}
+
+#avatar option[data-img="../public/img/invitado.png"] {
+    background-image: url('../img/invitado.png');
+}
+
+#avatar option[data-img="../public/img/hombre1.png"] {
+    background-image: url('../img/hombre1.png');
+}
+
+#avatar option[data-img="../public/img/hombre2.png"] {
+    background-image: url('../img/hombre2.png');
+}
+
+#avatar option[data-img="../public/img/mujer1.png"] {
+    background-image: url('../img/mujer1.png');
+}
+
+/* Estilo para centrar los botones y moverlos hacia arriba */
+.d-flex.justify-content-between.w-100.mt-4 {
+    justify-content: center;
+    margin-top: 2rem; /* Ajuste de margen superior */
+}
+
+.d-flex.justify-content-between.w-100.mt-4 a {
+    margin: 0 20px; /* Ajuste de margen para centrar los botones */
+}
+
+/* Ajuste para mover el enlace hacia arriba */
+.text-center.mt-3 {
+    margin-top: 1rem; /* Ajuste de margen superior */
+}
+
+/* Ajuste para alinear el select del avatar y la imagen de vista previa */
+.form-group.avatar-container {
+    display: flex;
+    align-items: center;
+}
+
+.form-group.avatar-container label {
+    margin-right: 10px; /* Añade margen entre el label y el select */
+}
+
+/* Estilos para la página de Iniciar Sesión */
+.login-body {
+    background-color: #b3e5fc;
+}
+
+.login-header {
+    position: relative;
+    text-align: center;
+}
+
+.login-img {
+    width: 400px; /* Ajusta el tamaño de la imagen según sea necesario */
+    height: auto;
+}
+
+.login-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 2rem; /* Tamaño de texto más pequeño */
+    font-weight: bold;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 100%; /* Asegura que el campo ocupe todo el ancho disponible */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+.login-form label {
+    margin-bottom: .5rem; /* Añade un pequeño margen debajo de los labels */
+    display: block;
+}
+
+.login-link {
+    color: #01579b;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    width: 120px;
+    margin: 0 20px; /* Añade margen a los lados */
+}
+
+/* Estilo para centrar los botones y moverlos hacia arriba */
+.d-flex.justify-content-between.w-100.mt-4 {
+    justify-content: center;
+    margin-top: 2rem; /* Ajuste de margen superior */
+}
+
+.d-flex.justify-content-between.w-100.mt-4 a {
+    margin: 0 -5px; /* Reducir el margen lateral para acercar los botones */
+}
+
+/* Ajuste para mover el enlace hacia arriba */
+.text-center.mt-3 {
+    margin-top: 1rem; /* Ajuste de margen superior */
+}
+
+/*Asignatura*/
+/* Specific styles for the "pagina_asignaturas" page */
+.asignaturas-wrapper {
+    height: 100vh;
+}
+
+.asignaturas-sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    background-color: #164773; /* Color de fondo del menú */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: space-between; /* Distribuir el espacio entre los elementos */
+}
+
+.asignaturas-sidebar .sidebar-heading {
+    padding: 20px;
+    align-self: center; /* Centrar el logo horizontalmente */
+}
+
+.asignaturas-sidebar .sidebar-heading .logo {
+    width: 100px; /* Tamaño reducido del logo */
+    height: auto;
+    margin-bottom: 20px; /* Espacio inferior para el logo */
+}
+
+.asignaturas-sidebar .list-group {
+    width: 100%;
+    text-align: center;
+    flex-grow: 1; /* Permitir que la lista crezca y ocupe el espacio disponible */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente */
+}
+
+.asignaturas-sidebar .list-group-item {
+    border: none;
+    background-color: #164773; /* Color de fondo del menú */
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
+}
+
+/* Page Content */
+.asignaturas-content {
+    flex: 1;
+    background-color: #A8D8E8; /* Color de fondo de la página */
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Para posicionar el contenido centrado */
+}
+
+.asignaturas-content .btn-custom {
+    background-color: #164773; /* Color de fondo de los botones */
+    color: white;
+    border-radius: 50px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: center; /* Centra el texto verticalmente */
+    height: 70px; /* Botones más altos */
+    font-size: 1.50rem; /* Tamaño de fuente más grande */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.asignaturas-content .btn-custom:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Botón separado */
+.asignaturas-content .btn-lg {
+    margin-bottom: 20px;
+}
+
+/* Color para dark blue */
+.bg-custom-blue {
+    background-color: #164773;
+}
+
+/* Color para light blue */
+.bg-custom-light-blue {
+    background-color: #A8D8E8;
+}
+
+/* Ajustes específicos para la página de asignaturas */
+.asignaturas-content .display-4 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.asignaturas-center-content {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/*Invitado*/
+/* Specific styles for the "pagina_invitado" page */
+.invitado-wrapper {
+    height: 100vh;
+}
+
+.invitado-sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    height: 100vh;
+    background-color: #164773; /* Color de fondo del menú */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar horizontalmente */
+    justify-content: space-between; /* Distribuir el espacio entre los elementos */
+}
+
+.invitado-sidebar .sidebar-heading {
+    padding: 20px;
+    align-self: center; /* Centrar el logo horizontalmente */
+}
+
+.invitado-sidebar .sidebar-heading .logo {
+    width: 100px; /* Tamaño reducido del logo */
+    height: auto;
+    margin-bottom: 20px; /* Espacio inferior para el logo */
+}
+
+.invitado-sidebar .list-group {
+    width: 100%;
+    text-align: center;
+    flex-grow: 1; /* Permitir que la lista crezca y ocupe el espacio disponible */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centrar verticalmente */
+}
+
+.invitado-sidebar .list-group-item {
+    border: none;
+    background-color: #164773; /* Color de fondo del menú */
+    font-size: 1.25rem; /* Tamaño de fuente más grande */
+}
+
+/* Page Content */
+.invitado-content {
+    flex: 1;
+    background-color: #A8D8E8; /* Color de fondo de la página */
+    padding: 20px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Para posicionar el contenido centrado */
+}
+
+.invitado-content .btn-custom {
+    background-color: #164773; /* Color de fondo de los botones */
+    color: white;
+    border-radius: 50px;
+    width: 250px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: center; /* Centra el texto verticalmente */
+    height: 70px; /* Botones más altos */
+    font-size: 1.50rem; /* Tamaño de fuente más grande */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.invitado-content .btn-custom:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Botón separado */
+.invitado-content .btn-lg {
+    margin-bottom: 20px;
+}
+/* Ajustes específicos para la página de invitado */
+.invitado-content .display-4 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.invitado-center-content {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Estilos para la página asignaturas */
+.asignaturas-wrapper {
+    height: 100vh;
+}
+
+.asignaturas-sidebar {
+    width: 250px;
+    padding-top: 20px;
+}
+
+.asignaturas-content {
+    background-color: #A8D8E8;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.asignaturas-center-content {
+    text-align: center;
+}
+
+/* Estilos específicos para la página menuAsig */
+/* Estilos generales */
+/* Estilos del menú de la izquierda */
+
+.text-white {
+    color: white;
+}
+
+.list-group-item-action {
+    cursor: pointer;
+}
+
+.sidebar-heading {
+    margin-bottom: 30px;
+}
+
+/* Estilos para la página asignaturas */
+.asignaturas-wrapper {
+    height: 100vh;
+}
+
+.asignaturas-sidebar {
+    width: 250px;
+    padding-top: 20px;
+}
+
+.asignaturas-content {
+    background-color: #A8D8E8;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.asignaturas-center-content {
+    text-align: center;
+}
+
+.btn-custom {
+    background-color: #164773;
+    color: white;
+    border-radius: 30px;
+    padding: 15px 30px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 1.5em;
+    max-width: 500px;
+}
+
+.btn-custom:hover {
+    background-color: #1a5fa0;
+}
+
+/* Estilos específicos para la página menuAsig */
+
+.menuAsig-wrapper {
+    height: 100vh;
+}
+
+.menuAsig-content {
+    background-color: #A8D8E8;
+    overflow: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.menuAsig-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    width: 120px;
+    height: 120px;
+    margin-right: 20px;
+}
+
+.user-info h2 {
+    font-size: 2em;
+}
+
+.elipse-container {
+    position: relative;
+}
+
+.elipse-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+.elipse-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+}
+
+.menuAsig-center-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    align-items: center;
+}
+
+.btn-container a {
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+.asignatura-badge {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.asignatura-badge img {
+    width: 200px; /* Ajusta según sea necesario */
+    height: auto;
+}
+
+.asignatura-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem; /* Ajusta según sea necesario */
+    color: #ffffff;
+    text-align: center;
+}
+
+/* Estilos específicos para la página de examen (examen.html) */
+.examen-form {
+    display: flex;
+    align-items: center;
+}
+
+.examen-form .form-group {
+    margin-right: 20px; /* Espacio entre los campos del formulario */
+    flex-direction: column;
+    justify-content: center;
+}
+
+.examen-form .form-group label {
+    display: block;
+    margin-bottom: 5px; /* Espacio debajo del label */
+}
+
+.examen-form .form-group input {
+    width: 200px; /* Ancho de los campos de texto */
+}
+
+.examen-form .btn-custom {
+    margin-left: 20px; /* Espacio a la izquierda del botón */
+    height: 40px; /* Altura del botón */
+    font-size: 14px; /* Tamaño de la fuente del botón */
+    align-self: flex-end; /* Alinear el botón al final */
+}
+
+.menuAsig-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.mode-title {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.elipse-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.btn-examen {
+    background-color: #164773;
+    color: white;
+    border-radius: 30px;
+    padding: 15px 30px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: 0.8em;
+    max-width: 300px;
+}
+
+.elipse-text {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Ajustes adicionales para mejorar el espaciado */
+.menuAsig-content .menuAsig-top {
+    margin-bottom: 0; /* Reduce el margen inferior del contenedor superior */
+}
+
+.menuAsig-center-content {
+    margin-top: 20px; /* Ajusta este valor para mover el formulario más cerca de la parte superior */
+}
+/* Estilos para el contenedor de la lista de PDFs */
+.pdf-list-container {
+    max-height: 315px; /* Ajusta la altura según sea necesario */
+    max-width: 800px;
+    height: 400px;
+    width: 800px;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    padding: 10px;
+    background-color: #cdcecf; /* Fondo blanco para la lista */
+    border: 1px solid #164773; /* Borde para el contenedor */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.pdf-list-ul {
+    list-style-type: none; /* Quitar los puntos de la lista */
+    padding: 0;
+    margin: 0;
+}
+.custom-select-b {
+    width: 150px;
+}
+.custom-select-c {
+    width: 250px;
+}
+.custom-select-a {
+    width: 80%; /* Aumenta el ancho del menú desplegable */
+    width: 100px;
+    margin-right: 20px; /* Añade margen derecho */
+}
+
+.pdf-list-ul li {
+    margin-bottom: 10px; /* Espacio entre los elementos de la lista */
+}
+
+.pdf-list-ul li a {
+    color: #007bff; /* Color del enlace */
+    text-decoration: none; /* Quitar subrayado */
+}
+
+.pdf-list-ul li a:hover {
+    text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+/* Estilos para la página de Generar Ejercicio */
+.menuAsig-center-content h4 {
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.exercise-container {
+    max-height: 250px; /* Ajusta la altura según sea necesario */
+    max-width: 700px;
+    height: 400px;
+    width: 800px;
+    overflow: hidden; /* Habilita el scroll vertical */
+    padding: 10px;
+    background-color: #cdcecf; 
+    border: 1px solid #164773; /* Borde para el contenedor */
+    border-radius: 5px; /* Bordes redondeados */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll; /* Asegura que el contenedor pueda hacer scroll */
+}
+
+.exercise-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Escalar la imagen para que quepa dentro del recuadro */
+    transform-origin: center center;
+    transition: transform 0.2s;
+}
+
+
+.exercise-container:hover .exercise-image {
+    transform: scale(1.1); /* Aumentar el tamaño de la imagen al hacer hover */
+    overflow: auto;
+}
+
+.back-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    width: 100px;
+}
+
+.fav-button {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    width: 150px;
+}
+
+.solution-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    width: 150px;
+}
+.zoom-controls {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+.zoom-controls button {
+    background-color: #164773;
+    color: white;
+    border: none;
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.exercise-container:hover .zoom-controls {
+    display: flex;
+}

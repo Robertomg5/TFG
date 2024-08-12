@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú Asignatura</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                        document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+        });
+    </script>
+    
+    <div class="menuAsig-wrapper d-flex">
+        <!-- Sidebar -->
+        <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
+            <div class="sidebar-heading text-center mt-3">
+                <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="mt-auto mb-auto">
+                <div class="list-group list-group-flush w-100 text-center">
+                    <a href="/menuAsig" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Inicio</a>
+                    <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
+                    <a href="/asignatura" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Asignaturas</a>
+                    <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
+                    <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+
+         <!-- Page Content -->
+         <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
+            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
+                <div class="user-info d-flex align-items-center">
+                    <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                    <h2></h2>
+                </div>
+                <div class="elipse-container">
+                    <img src="/img/elipse1.png" alt="Elipse" class="img-fluid">
+                    <div class="elipse-text">
+                        <h2></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="menuAsig-center-content w-100">
+                <h4>Elige una opción</h4>
+                <div class="btn-container mt-4 d-flex flex-column align-items-center">
+                    <a href="/examen" class="btn btn-custom btn-lg mb-3">Modo Examen</a>
+                    <a href="/ejercicio" class="btn btn-custom btn-lg mb-3">Modo Entrenamiento</a>
+                    <a href="/visualizarTemario" class="btn btn-custom btn-lg">Visualizar Temario</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

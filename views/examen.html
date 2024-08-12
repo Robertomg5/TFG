@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Exámen</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                        document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+        
+
+        document.getElementById('examen-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const anio = document.getElementById('anio').value || null;
+            const convocatoria = document.getElementById('convocatoria').value || null;
+            const comunidad = document.getElementById('comunidad').value || null;
+            
+            const data = {
+                    anio: anio,
+                    convocatoria: convocatoria,
+                    comunidad: comunidad
+                };
+            
+            fetch('/examen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(examenes => {
+                // Mostrar los exámenes en la interfaz de usuario
+                const listaExamenes = document.getElementById('lista');
+                listaExamenes.innerHTML = '';
+
+                examenes.forEach(examen => {
+                    const li = document.createElement('li');
+                    const enlace = document.createElement('a');
+                    enlace.href = examen.ruta_ex;
+                    enlace.textContent = examen.nombreArchivo;
+                    enlace.target = '_blank';
+                    li.appendChild(enlace);
+                    listaExamenes.appendChild(li);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    });
+
+    </script>
+
+    <div class="menuAsig-wrapper d-flex">
+        <!-- Sidebar -->
+        <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
+            <div class="sidebar-heading text-center mt-3">
+                <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="mt-auto mb-auto">
+                <div class="list-group list-group-flush w-100 text-center">
+                    <a href="/menuAsig" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Inicio</a>
+                    <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
+                    <a href="/asignatura" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Asignaturas</a>
+                    <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
+                    <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
+            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
+                <div class="user-info d-flex align-items-center">
+                    <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                    <h2></h2>
+                </div>
+                <h4 class="mode-title">Modo Exámen</h4>
+                <div class="elipse-container">
+                    <img src="/img/elipse1.png" alt="Elipse" class="img-fluid">
+                    <div class="elipse-text">
+                        <h2></h2> 
+                    </div>
+                </div>
+            </div>
+            <div class="examen-form">
+                <form method="post" action="" class="examen-form d-flex align-items-center justify-content-center mt-4" id="examen-form">
+                    <div class="form-group mx-3">
+                        <label for="anio">Año</label>
+                        <select class="form-control custom-select-a" id="anio">
+                            <option value=""> </option>
+                            <option value="2024"> 2024 </option>
+                            <option value="2023"> 2023 </option>
+                            <option value="2022"> 2022 </option>
+                            <option value="2021"> 2021 </option>
+                        </select>
+                    </div>
+                    <div class="form-group mx-3">
+                        <label for="convocatoria">Convocatoria</label>
+                        <select class="form-control custom-select-b" id="convocatoria">
+                            <option value="" selected></option>
+                            <option value="Ordinaria"> Ordinaria </option>
+                            <option value="Extraordinaria"> Extraordinaria </option>
+                        </select>
+                    </div>
+                    <div class="form-group mx-3">
+                        <label for="comunidad">Comunidad Autónoma</label>
+                        <select class="form-control custom-select-c" id="comunidad">
+                            <option value="" selected></option>
+                            <option value="Castilla-La Mancha"> Castilla-La Mancha </option>
+                            <option value="Andalucia"> Andalucía </option>
+                            <option value="Madrid"> Madrid </option>
+                            <option value="Murcia"> Murcia </option>
+                            <option value="Valencia"> Comunidad Valenciana </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-examen">Buscar</button>
+                </form>
+            </div>
+            <div class="pdf-list mt-5">
+                <div class="pdf-list-container">
+                    <ul class="pdf-list-ul" id="lista">
+
+                    </ul>
+                </div>
+            </div>
+            <button class="btn btn-custom btn-lg back-button" id="back-button">Volver</button>
+        </div>
+    </div>
+    <script>
+        // Redirigir a la página anterior al hacer clic en "Volver"
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '/menuAsig';
+        });
+    </script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

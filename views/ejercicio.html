@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Ejercicio</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                        document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+        });
+    </script>
+
+    <div class="menuAsig-wrapper d-flex">
+        <!-- Sidebar -->
+        <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
+            <div class="sidebar-heading text-center mt-3">
+                <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="mt-auto mb-auto">
+                <div class="list-group list-group-flush w-100 text-center">
+                    <a href="/menuAsig" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Inicio</a>
+                    <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
+                    <a href="/asignatura" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Asignaturas</a>
+                    <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
+                    <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
+            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-3">
+                <div class="user-info d-flex align-items-center">
+                    <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                    <h2></h2>
+                </div>
+                <h4 class="mode-title">Modo Entrenamiento</h4>
+                <div class="elipse-container">
+                    <img src="/img/elipse1.png" alt="Elipse" class="img-fluid">
+                    <div class="elipse-text">
+                        <h2></h2> 
+                    </div>
+                </div>
+            </div>
+            <div class="menuAsig-center-content d-flex flex-column align-items-center justify-content-center w-100">
+                <h4>Elige una temática</h4>
+                <form class="d-flex align-items-center mb-4">
+                    <div class="form-group">
+                        <select class="form-control custom-select-c" id="tematicaSelect">
+                            <option value="" selected disabled hidden>Elige una temática</option>
+                            <option value="tematica1">Álgebra</option>
+                            <option value="tematica2">Integrales</option>
+                            <option value="tematica3">Estadística</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-custom btn-lg ml-3">Generar Ejercicio</button>
+                </form>
+                <div class="exercise-container mt-2">
+                    <img src="//ejercicios/ejercicio.PNG" id="exerciseImage" alt="Ejercicio Aleatorio" class="img-fluid exercise-image">
+                    <div class="zoom-controls">
+                        <button id="zoomIn">+</button>
+                        <button id="zoomOut">-</button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-custom btn-lg back-button" id="back-button">Volver</button>
+            <button class="btn btn-custom btn-lg fav-button">Añadir a Bibioteca</button>
+            <button class="btn btn-custom btn-lg solution-button">Ver Solución</button>
+        </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Zoom con botones
+        const zoomInButton = document.getElementById('zoomIn');
+        const zoomOutButton = document.getElementById('zoomOut');
+        const exerciseImage = document.getElementById('exerciseImage');
+        let scale = 1;
+
+        zoomInButton.addEventListener('click', function() {
+            scale += 0.3;
+            scale = Math.min(scale, 2); // Limita el zoom máximo al 200%
+            exerciseImage.style.transform = `scale(${scale})`;
+        });
+
+        zoomOutButton.addEventListener('click', function() {
+            scale -= 0.2;
+            scale = Math.max(scale, 0.5); // Limita el zoom mínimo al 50%
+            exerciseImage.style.transform = `scale(${scale})`;
+        });
+
+        // Cambiar la imagen al hacer clic en "Ver Solución"
+        document.querySelector('.solution-button').addEventListener('click', function() {
+            exerciseImage.src = '/ejercicios/solucion.PNG';
+        });
+
+        // Cambiar la imagen al hacer clic en "Generar Ejercicio"
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            exerciseImage.src = '/ejercicios/ejercicio.PNG';
+        });
+
+        // Redirigir a la página anterior al hacer clic en "Volver"
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '/menuAsig';
+        });
+    </script>
+    
+</body>
+</html>

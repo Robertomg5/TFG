@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignaturas</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+        });
+
+        function selectAsignatura(asignatura) {
+            fetch('/select-asignatura', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ asignatura: asignatura })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/menuAsig";
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+    <div class="asignaturas-wrapper d-flex">
+        <!-- Sidebar -->
+        <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
+            <div class="sidebar-heading text-center mt-3">
+                <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="mt-auto mb-auto">
+                <div class="list-group list-group-flush w-100 text-center">
+                    <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
+                    <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
+                    <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="asignaturas-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
+            <div class="user-info d-flex align-items-center mb-5">
+                <img src="" alt="User Image" class="img-fluid rounded-circle mr-3" style="width: 100px; height: 100px;">
+                <h2 class="display-4"></h2>
+            </div>
+            <div class="asignaturas-center-content d-flex flex-column justify-content-center align-items-center w-100 h-100 position-absolute">
+                <h4 class="display-4">Selecciona una asignatura</h4>
+                <div class="mt-4 w-50 d-flex flex-column align-items-center">
+                    <button onclick="selectAsignatura('Matemáticas')" class="btn btn-custom btn-lg mb-3">Matemáticas</button>
+                    <button onclick="selectAsignatura('Física')" class="btn btn-custom btn-lg">Física</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
