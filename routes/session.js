@@ -16,7 +16,8 @@ router.get('/user-data', (req, res) => {
             username: req.session.username,
             avatar: req.session.avatar,
             asignatura: req.session.asignatura,
-            asignaturaId: req.session.asignaturaId
+            asignaturaId: req.session.asignaturaId,
+            id: req.session.id
         });
     }
 });
