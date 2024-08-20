@@ -45,7 +45,7 @@
                     .then(data => {
                         console.log('Success:', data);
                         if (data.success) {
-                            fetch('/user-data')
+                            /*fetch('/user-data')
                                 .then(response => response.json())
                                 .then(data => {
                                     if (data.username) {
@@ -53,9 +53,10 @@
                                         document.querySelector('.user-info img').src = data.avatar;
                                     }
                                 })
-                                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+                                .catch(error => console.error('Error al obtener los datos del usuario:', error));*/ 
+                                window.location.reload();
                         } else {
-                            window.location.href = "/perfil";
+                            document.getElementById("error-message").innerText = "El nombre de usuario ya está en uso";
                         }
                     })
                     .catch((error) => {
@@ -87,8 +88,8 @@
         <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
             <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
                 <div class="user-info d-flex align-items-center">
-                    <img src="/img/hombre2.png" alt="User Image" class="img-fluid rounded-circle mr-3">
-                    <h2>Pedro González</h2>
+                    <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                    <h2></h2>
                 </div>
                 
                 <div class="elipse-container">
@@ -102,6 +103,7 @@
                 <div class="form-group">
                     <label for="username">Nombre de Usuario:</label>
                     <input type="text" class="form-control" id="username" required>
+                    <div id="error-message" class="text-danger mt-2"></div>
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
