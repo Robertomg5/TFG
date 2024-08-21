@@ -20,6 +20,110 @@
                     }
                 })
                 .catch(error => console.error('Error al obtener los datos del usuario:', error));
+
+            const tematicaSelect = document.getElementById('tematicaSelect');
+            const exerciseImage = document.getElementById('exerciseImage');
+            let currentExerciseCode = null; // Para almacenar el código del ejercicio actual
+            let exerciseImageSrc = ''; // Guardar la imagen original del ejercicio
+            const solutionButton = document.querySelector('.solution-button');
+            const favButton = document.querySelector('.fav-button');
+            const volverButton = document.createElement('button');
+            let showingSolution = false; // Estado que indica si estamos mostrando la solución
+
+            // Cambiar la imagen al hacer clic en "Generar Ejercicio"
+            document.querySelector('form').addEventListener('submit', function (event) {
+                event.preventDefault();
+                const tematica = tematicaSelect.value;
+
+                // Verifica que se haya seleccionado una temática
+                if (!tematica) {
+                    alert("Por favor, selecciona una temática.");
+                    return;
+                }
+
+                // Realiza una solicitud para generar un ejercicio
+                fetch('/generarEjercicio', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tematica })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentExerciseCode = data.ejercicio.cod_ej;
+                        exerciseImage.src = data.ejercicio.ruta_ej;
+                        exerciseImageSrc = data.ejercicio.ruta_ej; // Guarda la ruta del ejercicio actual
+                        showingSolution = false; // Restablecemos el estado
+                        solutionButton.textContent = 'Ver Solución'; // Restablecemos el texto del botón
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            // Alternar entre la solución y el ejercicio
+            solutionButton.addEventListener('click', function () {
+                if (!currentExerciseCode) {
+                    alert("No se ha generado ningún ejercicio.");
+                    return;
+                }
+
+                if (!showingSolution) {
+                    // Mostrar la solución
+                    fetch('/verSolucion', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ codEj: currentExerciseCode })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            exerciseImage.src = data.solucion;
+                            solutionButton.textContent = 'Volver al Ejercicio'; // Cambiar el texto del botón
+                            showingSolution = true; // Cambiamos el estado a "mostrando solución"
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    // Volver al ejercicio
+                    exerciseImage.src = exerciseImageSrc; // Restaurar la imagen del ejercicio
+                    solutionButton.textContent = 'Ver Solución'; // Cambiar el texto del botón de nuevo
+                    showingSolution = false; // Cambiamos el estado a "mostrando ejercicio"
+                }
+            });
+
+            // Añadir el ejercicio a la biblioteca al hacer clic en "Añadir a Biblioteca"
+            favButton.addEventListener('click', function () {
+                if (!currentExerciseCode) {
+                    alert("No se ha generado ningún ejercicio.");
+                    return;
+                }
+
+                // Realiza una solicitud para añadir el ejercicio a la biblioteca
+                fetch('/addEjercicioABiblioteca', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ejercicioId: currentExerciseCode })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Ejercicio añadido a la biblioteca.');
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
         });
     </script>
 
@@ -61,9 +165,10 @@
                     <div class="form-group">
                         <select class="form-control custom-select-c" id="tematicaSelect">
                             <option value="" selected disabled hidden>Elige una temática</option>
-                            <option value="tematica1">Álgebra</option>
-                            <option value="tematica2">Integrales</option>
-                            <option value="tematica3">Estadística</option>
+                            <option value="Algebra">Álgebra</option>
+                            <option value="Analisis">Análisis</option>
+                            <option value="Estadistica">Estadística</option>
+                            <option value="Geometria">Geometría</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-custom btn-lg ml-3">Generar Ejercicio</button>
