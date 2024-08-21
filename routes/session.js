@@ -1,17 +1,25 @@
 const { Router } = require("express");
 const router = Router();
-const db = require('../config/db');  // Importa la conexión a la base de datos
+const db = require('../config/db');  
 
 router.get('/user-data', (req, res) => {
+    //Primer caso: entrar como invitado y elegir asignatura.
     if (!req.session.username) {
-        return res.status(401).json({ error: 'Usuario no autenticado' });
+        res.json({
+            avatar: req.session.avatar,
+            asignatura: req.session.asignatura,
+            asignaturaId: req.session.asignaturaId,
+        });
     }
-    if (!req.session.asignatura){
+    //Caso para la primera pagina despues de registro o inicio de sesion.
+    else if (!req.session.asignatura){
         res.json({
             username: req.session.username,
             avatar: req.session.avatar
         });
-    } else{
+    } 
+    //Caso principal: el usuario registrado elige la asignatura.
+    else{
         res.json({
             username: req.session.username,
             avatar: req.session.avatar,
@@ -61,7 +69,7 @@ router.post('/asignaturaInvitado', (req, res) => {
 
         if (results.length > 0) {
             const idAsig = results[0].cod_asig;
-            req.session.username = "Invitado";
+            //req.session.username = "Invitado";
             req.session.avatar = avatarInvitado;
             req.session.asignatura = asignatura; 
             req.session.asignaturaId = idAsig;

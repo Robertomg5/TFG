@@ -10,6 +10,14 @@
 <body>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const tematicaSelect = document.getElementById('tematicaSelect');
+            const exerciseImage = document.getElementById('exerciseImage');
+            let currentExerciseCode = null; // Para almacenar el código del ejercicio actual
+            let exerciseImageSrc = ''; // Guardar la imagen original del ejercicio
+            const solutionButton = document.querySelector('.solution-button');
+            const favButton = document.querySelector('.fav-button');
+            const volverButton = document.createElement('button');
+            let showingSolution = false; // Estado que indica si estamos mostrando la solución
             fetch('/user-data')
                 .then(response => response.json())
                 .then(data => {
@@ -36,24 +44,64 @@
                             tematicaSelect.options[2].value = 'electromagnetismo';
                             tematicaSelect.options[2].textContent = 'Electromagnetismo';
 
-                            tematicaSelect.options[3].value = 'mecanica';
-                            tematicaSelect.options[3].textContent = 'Mecánica';
+                            tematicaSelect.options[3].value = 'optica';
+                            tematicaSelect.options[3].textContent = 'Optica';
 
-                            tematicaSelect.options[4].value = 'termodinamica';
-                            tematicaSelect.options[4].textContent = 'Termodinámica';
+                            tematicaSelect.options[4].value = 'ondas';
+                            tematicaSelect.options[4].textContent = 'Ondas';
+
+                            const optionElement = document.createElement('option');
+                            optionElement.value = 'moderna';
+                            optionElement.textContent = 'Física Moderna';
+                            tematicaSelect.appendChild(optionElement);
+                        }
+                    }else{
+                        document.querySelector('.user-info h2').textContent = 'Invitado';
+                        document.querySelector('.user-info img').src = data.avatar;
+                        document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                        favButton.remove();
+                        //Cambia las opciones del menu de la izquierda para invitados
+                        const divElement = document.querySelector('.list-group');
+                        const enlaces = divElement.getElementsByTagName('a');
+                        enlaces[1].textContent = "Iniciar Sesion";
+                        enlaces[1].href = "/IniciarSesion";
+                        enlaces[3].textContent = "Registrarme";
+                        enlaces[3].href = "/Registro";
+                        enlaces[4].textContent = "Salir";
+                        enlaces[4].href = "/";
+                        if (data.asignatura == "Matemáticas"){
+                            tematicaSelect.options[1].value = 'Algebra';
+                            tematicaSelect.options[1].textContent = 'Álgebra';
+
+                            tematicaSelect.options[2].value = 'Analisis';
+                            tematicaSelect.options[2].textContent = 'Análisis';
+
+                            tematicaSelect.options[3].value = 'Estadistica';
+                            tematicaSelect.options[3].textContent = 'Estadística';
+
+                            tematicaSelect.options[4].value = 'Geometria';
+                            tematicaSelect.options[4].textContent = 'Geometría';
+                        } else{
+                            tematicaSelect.options[1].value = 'campoGravitatorio';
+                            tematicaSelect.options[1].textContent = 'Campo Gravitatorio';
+
+                            tematicaSelect.options[2].value = 'electromagnetismo';
+                            tematicaSelect.options[2].textContent = 'Electromagnetismo';
+
+                            tematicaSelect.options[3].value = 'optica';
+                            tematicaSelect.options[3].textContent = 'Optica';
+
+                            tematicaSelect.options[4].value = 'ondas';
+                            tematicaSelect.options[4].textContent = 'Ondas';
+
+                            const optionElement = document.createElement('option');
+                            optionElement.value = 'moderna';
+                            optionElement.textContent = 'Física Moderna';
+                            tematicaSelect.appendChild(optionElement);
                         }
                     }
                 })
                 .catch(error => console.error('Error al obtener los datos del usuario:', error));
-
-            const tematicaSelect = document.getElementById('tematicaSelect');
-            const exerciseImage = document.getElementById('exerciseImage');
-            let currentExerciseCode = null; // Para almacenar el código del ejercicio actual
-            let exerciseImageSrc = ''; // Guardar la imagen original del ejercicio
-            const solutionButton = document.querySelector('.solution-button');
-            const favButton = document.querySelector('.fav-button');
-            const volverButton = document.createElement('button');
-            let showingSolution = false; // Estado que indica si estamos mostrando la solución
 
             // Cambiar la imagen al hacer clic en "Generar Ejercicio"
             document.querySelector('form').addEventListener('submit', function (event) {
