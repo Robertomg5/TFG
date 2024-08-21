@@ -8,31 +8,109 @@
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
-    <div class="menuAsig-wrapper d-flex">
-        <!-- Sidebar -->
-        <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
-            <div class="sidebar-heading text-center mt-3">
-                <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
-            </div>
-            <div class="mt-auto mb-auto">
-                <div class="list-group list-group-flush w-100 text-center">
-                    <a href="/menuAsig" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Inicio</a>
-                    <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
-                    <a href="/asignatura" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Asignaturas</a>
-                    <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
-                    <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
-                </div>
-            </div>
-        </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                        document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                        if (data.asignatura == "Matemáticas"){
+                            tematicaSelect.options[1].value = 'Algebra';
+                            tematicaSelect.options[1].textContent = 'Álgebra';
 
-        <!-- Page Content -->
-        <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
-            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
-                <h1 class="title">Visualizar Temario</h1>
+                            tematicaSelect.options[2].value = 'Analisis';
+                            tematicaSelect.options[2].textContent = 'Análisis';
+
+                            tematicaSelect.options[3].value = 'Estadistica';
+                            tematicaSelect.options[3].textContent = 'Estadística';
+
+                            tematicaSelect.options[4].value = 'Geometria';
+                            tematicaSelect.options[4].textContent = 'Geometría';
+                        } else{
+                            tematicaSelect.options[1].value = 'campoGravitatorio';
+                            tematicaSelect.options[1].textContent = 'Campo Gravitatorio';
+
+                            tematicaSelect.options[2].value = 'electromagnetismo';
+                            tematicaSelect.options[2].textContent = 'Electromagnetismo';
+
+                            tematicaSelect.options[3].value = 'mecanica';
+                            tematicaSelect.options[3].textContent = 'Mecánica';
+
+                            tematicaSelect.options[4].value = 'termodinamica';
+                            tematicaSelect.options[4].textContent = 'Termodinámica';
+                        }
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+        });
+    </script>
+
+<div class="menuAsig-wrapper d-flex">
+    <!-- Sidebar -->
+    <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
+        <div class="sidebar-heading text-center mt-3">
+            <img src="/img/logo.png" alt="Logo" class="img-fluid logo">
+        </div>
+        <div class="mt-auto mb-auto">
+            <div class="list-group list-group-flush w-100 text-center">
+                <a href="/menuAsig" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Inicio</a>
+                <a href="/perfil" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Perfil</a>
+                <a href="/asignatura" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Asignaturas</a>
+                <a href="/biblioteca" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Biblioteca</a>
+                <a href="/" class="list-group-item list-group-item-action bg-custom-blue text-white py-3 h4">Cerrar Sesión</a>
             </div>
         </div>
     </div>
 
+    <!-- Page Content -->
+    <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
+        <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
+            <div class="user-info d-flex align-items-center">
+                <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                <h2></h2>
+            </div>
+            <h4 class="mode-title">Visualizar Temario</h4>
+            <div class="elipse-container">
+                <img src="/img/elipse1.png" alt="Elipse" class="img-fluid">
+                <div class="elipse-text">
+                    <h2></h2> 
+                </div>
+            </div>
+        </div>
+        <div class="examen-form">
+            <form method="post" action="" class="examen-form d-flex align-items-center justify-content-center mt-4" id="examen-form">
+                <div class="form-group mx-3">
+                    <label for="tematica">Elige una temática</label>
+                    <select class="form-control custom-select-c" id="tematicaSelect">
+                        <option value="" selected disabled hidden></option>
+                        <option value="Algebra">Álgebra</option>
+                        <option value="Analisis">Análisis</option>
+                        <option value="Estadistica">Estadística</option>
+                        <option value="Geometria">Geometría</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-examen">Buscar</button>
+            </form>
+        </div>
+        <div class="pdf-list mt-5">
+            <div class="pdf-list-container">
+                <ul class="pdf-list-ul" id="lista">
+
+                </ul>
+            </div>
+        </div>
+        <button class="btn btn-custom btn-lg back-button" id="back-button">Volver</button>
+    </div>
+</div>
+<script>
+    // Redirigir a la página anterior al hacer clic en "Volver"
+    document.getElementById('back-button').addEventListener('click', function() {
+        window.location.href = '/menuAsig';
+    });
+</script>
     <!-- Bootstrap core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

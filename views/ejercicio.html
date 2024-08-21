@@ -17,6 +17,31 @@
                         document.querySelector('.user-info h2').textContent = data.username;
                         document.querySelector('.user-info img').src = data.avatar;
                         document.querySelector('.elipse-text h2').textContent = data.asignatura;
+                        if (data.asignatura == "Matemáticas"){
+                            tematicaSelect.options[1].value = 'Algebra';
+                            tematicaSelect.options[1].textContent = 'Álgebra';
+
+                            tematicaSelect.options[2].value = 'Analisis';
+                            tematicaSelect.options[2].textContent = 'Análisis';
+
+                            tematicaSelect.options[3].value = 'Estadistica';
+                            tematicaSelect.options[3].textContent = 'Estadística';
+
+                            tematicaSelect.options[4].value = 'Geometria';
+                            tematicaSelect.options[4].textContent = 'Geometría';
+                        } else{
+                            tematicaSelect.options[1].value = 'campoGravitatorio';
+                            tematicaSelect.options[1].textContent = 'Campo Gravitatorio';
+
+                            tematicaSelect.options[2].value = 'electromagnetismo';
+                            tematicaSelect.options[2].textContent = 'Electromagnetismo';
+
+                            tematicaSelect.options[3].value = 'mecanica';
+                            tematicaSelect.options[3].textContent = 'Mecánica';
+
+                            tematicaSelect.options[4].value = 'termodinamica';
+                            tematicaSelect.options[4].textContent = 'Termodinámica';
+                        }
                     }
                 })
                 .catch(error => console.error('Error al obtener los datos del usuario:', error));
@@ -174,7 +199,7 @@
                     <button type="submit" class="btn btn-custom btn-lg ml-3">Generar Ejercicio</button>
                 </form>
                 <div class="exercise-container mt-2">
-                    <img src="//ejercicios/ejercicio.PNG" id="exerciseImage" alt="Ejercicio Aleatorio" class="img-fluid exercise-image">
+                    <img src="" id="exerciseImage" alt="Ejercicio Aleatorio" class="img-fluid exercise-image">
                     <div class="zoom-controls">
                         <button id="zoomIn">+</button>
                         <button id="zoomOut">-</button>
