@@ -3,11 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Biblioteca</title>
+    <title>Generar Ejercicio</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const asignaturaSelect = document.getElementById('asignaturaSelect');
+            const exerciseImage = document.getElementById('exerciseImage');
+            let currentExerciseCode = null; // Para almacenar el código del ejercicio actual
+            let exerciseImageSrc = ''; // Guardar la imagen original del ejercicio
+            let currentExercise_sol = ''; // Guardar la solucion del ejercicio actual
+            let showingSolution = false; // Estado que indica si estamos mostrando la solución
+            let exercises = []; 
+            let currentExerciseIndex = 0; 
+            const solutionButton = document.querySelector('.solution-button');
+            const eliminarButton = document.querySelector('.eliminar-button');
+            const volverButton = document.createElement('button');
+            fetch('/user-data')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.username) {
+                        document.querySelector('.user-info h2').textContent = data.username;
+                        document.querySelector('.user-info img').src = data.avatar;
+                    }else{
+                        document.querySelector('.user-info h2').textContent = 'Invitado';
+                        document.querySelector('.user-info img').src = data.avatar;
+                        //Cambia las opciones del menu de la izquierda para invitados
+                        const divElement = document.querySelector('.list-group');
+                        const enlaces = divElement.getElementsByTagName('a');
+                        enlaces[1].textContent = "Iniciar Sesion";
+                        enlaces[1].href = "/IniciarSesion";
+                        enlaces[2].textContent = "Asignaturas";
+                        enlaces[2].href = "/Invitado";
+                        enlaces[3].textContent = "Registrarme";
+                        enlaces[3].href = "/Registro";
+                        enlaces[4].textContent = "Salir";
+                        enlaces[4].href = "/";
+                    }
+                })
+                .catch(error => console.error('Error al obtener los datos del usuario:', error));
+
+            // Cambiar la imagen al hacer clic en "Generar Ejercicio"
+            document.getElementById('searchForm').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const asignatura = document.getElementById('asignaturaSelect').value;
+
+                    fetch(`/getEjerciciosBiblioteca?asignatura=${asignatura}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            exercises = data;
+                            if (exercises.length > 0) {
+                                currentExerciseIndex = 0;
+                                updateExercise();
+                            } else {
+                                alert('No se encontraron ejercicios.');
+                            }
+                        })
+                        .catch(error => console.error('Error al obtener los ejercicios:', error));
+                });
+
+            // Alternar entre la solución y el ejercicio
+            solutionButton.addEventListener('click', function () {
+                if (!currentExerciseCode) {
+                alert("No se ha generado ningún ejercicio.");
+                return;
+                }
+                
+                if (!showingSolution) {
+                    // Si se está mostrando el ejercicio, cambiamos a modo solucion
+                    exerciseImage.src = currentExercise_sol;
+                    solutionButton.textContent = 'Volver al Ejercicio'; 
+                    showingSolution = true; // Cambiamos el estado a "mostrando solución"
+                } else {
+                    // Si se esta viendo la solucion, cambiamos a modo ejercicio
+                    exerciseImage.src = exerciseImageSrc; // Restaurar la imagen del ejercicio
+                    solutionButton.textContent = 'Ver Solución'; 
+                    showingSolution = false; // Cambiamos el estado a "mostrando ejercicio"
+                }
+                
+            });
+
+            // Mostrar el ejercicio actual
+            function updateExercise() {
+                const exercise = exercises[currentExerciseIndex];
+                currentExerciseCode = exercise.cod_ej;
+                exerciseImageSrc = exercise.ruta_ej;
+                currentExercise_sol = exercise.ruta_sol;
+                exerciseImage.src = exerciseImageSrc;
+                showingSolution = false;
+            }
+
+            // Añadir el ejercicio a la biblioteca al hacer clic en "Añadir a Biblioteca"
+            eliminarButton.addEventListener('click', function () {
+                
+                if (!currentExerciseCode) {
+                    alert("No se ha generado ningún ejercicio.");
+                    return;
+                }
+
+                // Realiza una solicitud para añadir el ejercicio a la biblioteca
+                fetch('/deleteEjercicioBiblioteca', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ ejercicioId: currentExerciseCode })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Ejercicio eliminado de la biblioteca.');
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+                
+            });
+            
+        });
+    </script>
+
     <div class="menuAsig-wrapper d-flex">
         <!-- Sidebar -->
         <div class="asignaturas-sidebar bg-custom-blue d-flex flex-column align-items-center">
@@ -27,9 +146,43 @@
 
         <!-- Page Content -->
         <div class="menuAsig-content d-flex flex-column p-4 bg-custom-light-blue w-100 position-relative">
-            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-5">
-                <h1 class="title">Biblioteca</h1>
+            <div class="menuAsig-top d-flex justify-content-between align-items-center w-100 mb-3">
+                <div class="user-info d-flex align-items-center">
+                    <img src="" alt="User Image" class="img-fluid rounded-circle mr-3">
+                    <h2></h2>
+                </div>
+                <h4 class="mode-title"></h4>
+                <div class="elipse-container">
+                    <img src="/img/elipse1.png" alt="Elipse" class="img-fluid">
+                    <div class="elipse-text">
+                        <h2>Biblioteca</h2> 
+                    </div>
+                </div>
             </div>
+            <div class="menuAsig-center-content d-flex flex-column align-items-center justify-content-center w-100">
+                <h4>Selecciona una asignatura</h4>
+                <form class="d-flex align-items-center mb-4" id="searchForm">
+                    <div class="form-group">
+                        <select class="form-control custom-select-c" id="asignaturaSelect">
+                            <option value="" selected disabled hidden>Asignatura</option>
+                            <option value="Matematicas">Matemáticas</option>
+                            <option value="Fisica">Física</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-custom btn-lg ml-3">Buscar en Biblioteca</button>
+                </form>
+                <div class="exercise-container mt-2">
+                    <img src="" id="exerciseImage" alt="Ejercicio Aleatorio" class="img-fluid exercise-image">
+                    <div class="zoom-controls">
+                        <button id="zoomIn">+</button>
+                        <button id="zoomOut">-</button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-custom btn-lg back-button" id="back-button">Volver</button>
+            <button class="btn btn-custom btn-lg eliminar-button">Eliminar</button>
+            <button class="btn btn-custom btn-lg solution-button">Ver Solución</button>
+        </div>
         </div>
     </div>
 
@@ -37,5 +190,31 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Zoom con botones
+        const zoomInButton = document.getElementById('zoomIn');
+        const zoomOutButton = document.getElementById('zoomOut');
+        const exerciseImage = document.getElementById('exerciseImage');
+        let scale = 1;
+
+        zoomInButton.addEventListener('click', function() {
+            scale += 0.3;
+            scale = Math.min(scale, 2); // Limita el zoom máximo al 200%
+            exerciseImage.style.transform = `scale(${scale})`;
+        });
+
+        zoomOutButton.addEventListener('click', function() {
+            scale -= 0.2;
+            scale = Math.max(scale, 0.5); // Limita el zoom mínimo al 50%
+            exerciseImage.style.transform = `scale(${scale})`;
+        });
+        
+        // Redirigir a la página anterior al hacer clic en "Volver"
+        document.getElementById('back-button').addEventListener('click', function() {
+            window.location.href = '/menuAsig';
+        });
+        
+    </script>
+    
 </body>
 </html>

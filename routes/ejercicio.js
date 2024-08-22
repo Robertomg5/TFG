@@ -80,5 +80,49 @@ router.post('/addEjercicioABiblioteca', (req, res) => {
     });
 });
 
+// Obtener los ejercicios de la biblioteca de un usuario.
+router.get('/getEjerciciosBiblioteca', (req, res) => {
+    const userId = req.session.userId;  
+    const asig = req.query.asignatura;
+    let cod_asig = 2;
+    console.log(userId);
+    
+    if(asig == "Matematicas"){
+        cod_asig = 1;
+    }
+    console.log(cod_asig);
+    const query = `
+        SELECT e.cod_ej, e.ruta_ej, e.ruta_sol 
+        FROM biblioteca b
+        JOIN ejercicio e ON b.ejercicio_id = e.cod_ej
+        WHERE b.usuario_id = ? AND e.cod_asig = ?;
+    `;
+    
+    db.query(query, [userId, cod_asig], (err, results) => {
+        if (err) throw err;
+        console.log(results[0].ruta_ej);
+        res.json(results);
+    });
+});
+
+// Elimina un ejercicio de la biblioteca
+router.post('/deleteEjercicioBiblioteca', (req, res) => {
+    const cod_ej = req.body.ejercicioId;
+    const userId = req.session.userId;
+    console.log(cod_ej);
+
+    const query = `DELETE FROM biblioteca WHERE ejercicio_Id = ? AND usuario_Id = ?`;
+    
+    db.query(query, [cod_ej, userId], (err, results) => {
+        if (err) {
+            console.error('Error al eliminar el ejercicio de la biblioteca:', err);
+            return res.status(500).json({ success: false, message: 'Error al eliminar.' });
+        }
+
+        res.json({ success: true, message: 'Ejercicio eliminado de la biblioteca con éxito.' });
+    });
+});
+
+
 
 module.exports = router;

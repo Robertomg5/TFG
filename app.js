@@ -84,6 +84,7 @@ app.use(require("./routes/session"));
 app.use(require("./routes/auth"));
 app.use(require("./routes/examen"));
 app.use(require("./routes/ejercicio"));
+app.use(require("./routes/documentacion"));
 
 //Start server
 app.listen(app.get("port"), ()=>{

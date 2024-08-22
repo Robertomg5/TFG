@@ -831,6 +831,14 @@ body {
     width: 150px;
 }
 
+.eliminar-button {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    width: 150px;
+}
+
 .solution-button {
     position: absolute;
     bottom: 20px;
@@ -861,3 +869,6 @@ body {
 .exercise-container:hover .zoom-controls {
     display: flex;
 }
+
+/*Biblioteca*/
+

@@ -56,6 +56,8 @@
                         const enlaces = divElement.getElementsByTagName('a');
                         enlaces[1].textContent = "Iniciar Sesion";
                         enlaces[1].href = "/IniciarSesion";
+                        enlaces[2].textContent = "Asignaturas";
+                        enlaces[2].href = "/Invitado";
                         enlaces[3].textContent = "Registrarme";
                         enlaces[3].href = "/Registro";
                         enlaces[4].textContent = "Salir";
@@ -73,26 +75,53 @@
                             tematicaSelect.options[4].value = 'Geometria';
                             tematicaSelect.options[4].textContent = 'Geometría';
                         } else{
-                            tematicaSelect.options[1].value = 'campoGravitatorio';
+                            tematicaSelect.options[1].value = 'CampoGravitatorio';
                             tematicaSelect.options[1].textContent = 'Campo Gravitatorio';
 
-                            tematicaSelect.options[2].value = 'electromagnetismo';
+                            tematicaSelect.options[2].value = 'Electromagnetismo';
                             tematicaSelect.options[2].textContent = 'Electromagnetismo';
 
-                            tematicaSelect.options[3].value = 'optica';
+                            tematicaSelect.options[3].value = 'Optica';
                             tematicaSelect.options[3].textContent = 'Optica';
 
-                            tematicaSelect.options[4].value = 'ondas';
+                            tematicaSelect.options[4].value = 'OndasYSonido';
                             tematicaSelect.options[4].textContent = 'Ondas';
 
                             const optionElement = document.createElement('option');
-                            optionElement.value = 'moderna';
+                            optionElement.value = 'FisicaModerna';
                             optionElement.textContent = 'Física Moderna';
                             tematicaSelect.appendChild(optionElement);
                         }
                     }
                 })
                 .catch(error => console.error('Error al obtener los datos del usuario:', error));
+
+                document.getElementById('examen-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const tematica = document.getElementById('tematicaSelect').value;
+                let examenes = [];
+                fetch(`/getDocumentacion?tematica=${tematica}`)
+                .then(response => response.json())
+                .then(docs => {
+                    // Mostrar los documentos en la interfaz de usuario
+                    const listaExamenes = document.getElementById('lista');
+                    listaExamenes.innerHTML = '';
+
+                    docs.forEach(documento => {
+                        const li = document.createElement('li');
+                        const enlace = document.createElement('a');
+                        enlace.href = documento.ruta_doc;
+                        enlace.textContent = documento.nombreArchivo;
+                        enlace.target = '_blank';
+                        li.appendChild(enlace);
+                        listaExamenes.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
         });
     </script>
 
@@ -140,7 +169,7 @@
                         <option value="Geometria">Geometría</option>
                     </select>
                 </div>
-                <button type="submit" class="btn-examen">Buscar</button>
+                <button type="submit" class="btn-examen" id="buscar">Buscar</button>
             </form>
         </div>
         <div class="pdf-list mt-5">
