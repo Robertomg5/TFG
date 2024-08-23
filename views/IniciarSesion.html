@@ -37,11 +37,11 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Success:', data);
                     if (data.success) {
                         window.location.href = "/asignatura";
                     } else {
-                        document.getElementById("error-message").innerText = "Usuario o contraseña incorrectos";
+                        document.getElementById("error-message").innerText = data.message;
+                        //window.location.reload();
                     }
                 })
                 .catch((error) => {
@@ -61,7 +61,9 @@
             <div class="form-group">
                 <label for="login-username">Nombre de Usuario:</label>
                 <input type="text" class="form-control" id="username" placeholder="Nombre de Usuario" required>
-                <div id="error-message" class="text-danger mt-2"></div> 
+                <div class="text-danger mt-2">
+                    <p id="error-message"></p>
+                </div> 
             </div>
             <div class="form-group">
                 <label for="login-password">Contraseña:</label>

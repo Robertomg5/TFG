@@ -100,7 +100,8 @@ router.get('/getEjerciciosBiblioteca', (req, res) => {
     
     db.query(query, [userId, cod_asig], (err, results) => {
         if (err) throw err;
-        console.log(results[0].ruta_ej);
+
+        //console.log(results[0].ruta_ej);
         res.json(results);
     });
 });

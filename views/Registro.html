@@ -40,7 +40,8 @@
                         if (data.success) {
                             window.location.href = "/asignatura";
                         } else {
-                            window.location.href = "/";
+                            document.getElementById("error-message").innerText = data.message;
+                            //window.location.reload();
                         }
                     })
                     .catch((error) => {
@@ -58,6 +59,9 @@
             <div class="form-group">
                 <label for="username">Nombre de Usuario:</label>
                 <input type="text" class="form-control" id="username" required>
+                <div class="text-danger mt-2">
+                    <p id="error-message"></p>
+                </div>
             </div>
             <div class="form-group">
                 <label for="password">Contraseña:</label>
