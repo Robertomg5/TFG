@@ -7,9 +7,16 @@ router.get('/getDocumentacion', (req, res) => {
     const tematica = req.query.tematica;
     const asig = req.session.asignaturaId;
 
-    const query = `SELECT * FROM documentacion WHERE tematica = ? AND cod_asig = ?`;
-    
-    db.query(query, [tematica, asig], (err, results) => {
+    let query = `SELECT * FROM documentacion WHERE cod_asig = ?`;
+    let queryParams = [asig];
+
+    // Si se ha seleccionado una temática, agregarla a la consulta
+    if (tematica) {
+        query += ` AND tematica = ?`;
+        queryParams.push(tematica);
+    }
+
+    db.query(query, queryParams, (err, results) => {
         if (err) throw err;
         const docs = results.map(documento => {
             const nombreArchivo = documento.ruta_doc.split('/').pop().replace('.pdf', '');
@@ -19,5 +26,6 @@ router.get('/getDocumentacion', (req, res) => {
         res.json(docs);
     });
 });
+
 
 module.exports = router;

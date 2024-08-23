@@ -18,6 +18,7 @@
             const favButton = document.querySelector('.fav-button');
             const volverButton = document.createElement('button');
             let showingSolution = false; // Estado que indica si estamos mostrando la solución
+            let esInvitado = false;
             fetch('/user-data')
                 .then(response => response.json())
                 .then(data => {
@@ -56,6 +57,7 @@
                             tematicaSelect.appendChild(optionElement);
                         }
                     }else{
+                        esInvitado = true;
                         document.querySelector('.user-info h2').textContent = 'Invitado';
                         document.querySelector('.user-info img').src = data.avatar;
                         document.querySelector('.elipse-text h2').textContent = data.asignatura;
@@ -175,28 +177,33 @@
 
             // Añadir el ejercicio a la biblioteca al hacer clic en "Añadir a Biblioteca"
             favButton.addEventListener('click', function () {
-                if (!currentExerciseCode) {
+                if (esInvitado){
+                    alert("Necesitas iniciar sesion para acceder a tu biblioteca");
+                }else{
+                    if (!currentExerciseCode) {
                     alert("No se ha generado ningún ejercicio.");
                     return;
-                }
-
-                // Realiza una solicitud para añadir el ejercicio a la biblioteca
-                fetch('/addEjercicioABiblioteca', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ ejercicioId: currentExerciseCode })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Ejercicio añadido a la biblioteca.');
-                    } else {
-                        alert(data.message);
                     }
-                })
-                .catch(error => console.error('Error:', error));
+
+                    // Realiza una solicitud para añadir el ejercicio a la biblioteca
+                    fetch('/addEjercicioABiblioteca', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ejercicioId: currentExerciseCode })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Ejercicio añadido a la biblioteca.');
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+                
             });
         });
     </script>
