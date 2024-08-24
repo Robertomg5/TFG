@@ -279,18 +279,33 @@
         const zoomOutButton = document.getElementById('zoomOut');
         const exerciseImage = document.getElementById('exerciseImage');
         let scale = 1;
+        const zoomStep = 0.1;
+        const maxScale = 2;  // Limite máximo del zoom
+        const minScale = 0.5;  // Limite mínimo del zoom
 
         zoomInButton.addEventListener('click', function() {
-            scale += 0.3;
-            scale = Math.min(scale, 2); // Limita el zoom máximo al 200%
-            exerciseImage.style.transform = `scale(${scale})`;
+            scale = Math.min(scale + zoomStep, maxScale);  // Incrementa el zoom
+            applyZoom();
         });
 
         zoomOutButton.addEventListener('click', function() {
-            scale -= 0.2;
-            scale = Math.max(scale, 0.5); // Limita el zoom mínimo al 50%
-            exerciseImage.style.transform = `scale(${scale})`;
+            scale = Math.max(scale - zoomStep, minScale);  // Reduce el zoom
+            applyZoom();
         });
+
+        function applyZoom() {
+            exerciseImage.style.transform = `scale(${scale})`;
+            
+            // Ajustar la barra de desplazamiento después de aplicar el zoom
+            const containerRect = exerciseContainer.getBoundingClientRect();
+            const imgRect = exerciseImage.getBoundingClientRect();
+
+            // Asegura que el contenedor permite desplazarse completamente a cualquier lado
+            exerciseContainer.scrollLeft = (imgRect.width - containerRect.width) / 2;
+            exerciseContainer.scrollTop = (imgRect.height - containerRect.height) / 2;
+        }
+
+
         
         // Redirigir a la página anterior al hacer clic en "Volver"
         document.getElementById('back-button').addEventListener('click', function() {

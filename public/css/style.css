@@ -69,7 +69,7 @@ body {
 }
 
 .registro-img {
-    width: 400px; /* Ajusta el tamaño de la imagen según sea necesario */
+    width: 400px; 
     height: auto;
 }
 
@@ -79,7 +79,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 2rem; /* Tamaño de texto más pequeño */
+    font-size: 2rem; 
     font-weight: bold;
 }
 
@@ -150,7 +150,7 @@ body {
     width: 60px; /* Ajusta el tamaño del recuadro de vista previa */
     height: 60px;
     border: 1px solid #ccc; /* Añade borde */
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 5px; 
     margin-left: 10px; /* Espacio entre el select y la imagen */
 }
 
@@ -228,7 +228,7 @@ body {
 }
 
 .login-img {
-    width: 400px; /* Ajusta el tamaño de la imagen según sea necesario */
+    width: 400px; 
     height: auto;
 }
 
@@ -733,7 +733,7 @@ body {
 }
 /* Estilos para el contenedor de la lista de PDFs */
 .pdf-list-container {
-    max-height: 315px; /* Ajusta la altura según sea necesario */
+    max-height: 315px; 
     max-width: 800px;
     height: 400px;
     width: 800px;
@@ -741,7 +741,7 @@ body {
     padding: 10px;
     background-color: #cdcecf; /* Fondo blanco para la lista */
     border: 1px solid #164773; /* Borde para el contenedor */
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 5px; 
 }
 
 .pdf-list-ul {
@@ -784,32 +784,31 @@ body {
 }
 
 .exercise-container {
-    max-height: 250px; /* Ajusta la altura según sea necesario */
+    max-height: 270px; 
     max-width: 700px;
-    height: 400px;
-    width: 800px;
-    overflow: hidden; /* Habilita el scroll vertical */
+    height: 270px;
+    width: 700px;
+    overflow: auto; /* Habilita el scroll vertical y horizontal */
     padding: 10px;
-    background-color: #cdcecf; 
+    background-color: #e7e7e7; 
     border: 1px solid #164773; /* Borde para el contenedor */
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 5px; 
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-grow: 1;
     padding: 0 20px;
-    overflow: scroll; /* Asegura que el contenedor pueda hacer scroll */
 }
 
 .exercise-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* Escalar la imagen para que quepa dentro del recuadro */
-    transform-origin: center center;
-    transition: transform 0.2s;
+    display: block;
+    position: relative;
+    transform-origin: center center; /* Para que el zoom se haga desde el centro */
+    width: 100%; /* Inicialmente la imagen ocupa todo el ancho del contenedor */
+    height: auto; /* Mantiene la proporción */
+    transition: transform 0.3s ease-in-out; /* Animación suave para el zoom */
 }
-
 
 .exercise-container:hover .exercise-image {
     transform: scale(1.1); /* Aumentar el tamaño de la imagen al hacer hover */
@@ -849,13 +848,11 @@ body {
     padding: 0.5rem 1rem;
     width: 150px;
 }
+
 .zoom-controls {
     position: absolute;
     top: 10px;
     right: 10px;
-    display: flex;
-    flex-direction: column;
-    display: none;
 }
 
 .zoom-controls button {
@@ -866,6 +863,20 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+#zoomIn, #zoomOut {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+#zoomIn:hover, #zoomOut:hover {
+    background-color: #0056b3;
 }
 
 .exercise-container:hover .zoom-controls {
