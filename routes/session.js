@@ -82,5 +82,17 @@ router.post('/asignaturaInvitado', (req, res) => {
     });
 });
 
+//Restaurar la sesion al cerrar.
+router.get('/cerrarSesion', (req, res) => {
+    
+    req.session.userId = null;
+    req.session.username = null;
+    req.session.asignatura = null;
+    req.session.asignaturaId = null;
+    req.session.avatar = null;
+    console.log("Sesion restaurada"); 
+
+    res.json({success: true});
+});
 
 module.exports = router;

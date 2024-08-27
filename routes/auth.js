@@ -55,7 +55,6 @@ router.post('/IniciarSesion', async (req, res) => {
                 res.json({ success: false, message: 'Contraseña incorrecta' });
             }
         } else {
-            // Usuario o contraseña incorrectos
             res.json({ success: false, message: 'Nombre de usuario incorrecto' });
         }
     });
