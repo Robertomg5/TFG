@@ -170,6 +170,9 @@ body {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+#error-message2{
+    color: red;
+}
 #avatar option[data-img] {
     background-repeat: no-repeat;
     background-size: 20px 20px;
