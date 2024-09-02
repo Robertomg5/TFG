@@ -142,22 +142,22 @@ body {
 }
 
 .custom-select {
-    width: 100px;
-    margin-right: 20px; /* Añade margen derecho */
+    width: 130px;
+    margin-right: 10px; 
 }
 
 .avatar-preview {
-    width: 60px; /* Ajusta el tamaño del recuadro de vista previa */
+    width: 60px; 
     height: 60px;
-    border: 1px solid #ccc; /* Añade borde */
+    border: 1px solid #ccc; 
     border-radius: 5px; 
-    margin-left: 10px; /* Espacio entre el select y la imagen */
+    margin-left: 20px; /* Espacio entre el select y la imagen */
 }
 
 /* Asegurar que las opciones del menú desplegable de avatares muestren las imágenes */
 #avatar {
     display: block;
-    width: 100%;
+    width: 120px;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -759,9 +759,9 @@ body {
     width: 250px;
 }
 .custom-select-a {
-    width: 80%; /* Aumenta el ancho del menú desplegable */
+    width: 80%; 
     width: 100px;
-    margin-right: 20px; /* Añade margen derecho */
+    margin-right: 20px; 
 }
 
 .pdf-list-ul li {

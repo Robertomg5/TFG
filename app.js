@@ -8,14 +8,14 @@ const path = require("path");
 app.set("port", 3000);
 
 //middlewares
-app.use(express.urlencoded({extended: false}));  //Para entender datos de formularios
-app.use(express.json());   //para recibir y entender formatos json
+app.use(express.urlencoded({extended: false}));         //Para entender datos de formularios
+app.use(express.json());                                //para recibir y entender formatos json
 app.use(bodyParser.json());
 app.use(session({
     secret: 'mi_secreto',           // Una cadena secreta que se utiliza para firmar la cookie de sesión
     resave: false,                  // Evita que la sesión se guarde nuevamente si no ha sido modificada
     saveUninitialized: true,        // Guarda sesiones nuevas aunque no tengan datos iniciales
-    cookie: { secure: false }       // Configuración de la cookie de sesión (no seguro en desarrollo)
+    cookie: { secure: false }       // Configuración de la cookie de sesión 
 }));
 
 // Servir archivos estáticos (CSS, imágenes, etc.)
@@ -85,6 +85,7 @@ app.use(require("./routes/auth"));
 app.use(require("./routes/examen"));
 app.use(require("./routes/ejercicio"));
 app.use(require("./routes/documentacion"));
+app.use(require("./routes/biblioteca"));
 
 //Start server
 app.listen(app.get("port"), ()=>{
